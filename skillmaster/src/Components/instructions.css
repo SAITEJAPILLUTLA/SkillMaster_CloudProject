@@ -1,0 +1,33 @@
+.glass{
+    background: linear-gradient(90.15deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 100%);
+box-shadow: inset 2px 3px 11px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(7px);
+
+/* Note: backdrop-filter has minimal browser support */
+color: aliceblue  !important;
+border-radius: 10px;
+}
+.whiteFont{
+    color: aliceblue;
+}
+.italic {
+    font-style: italic;
+}
+.footer{
+    background-color: black;
+    background-image: url("https://firebasestorage.googleapis.com/v0/b/scavanger-d62c4.appspot.com/o/questionImages%2Fbanner_Virtual_Scavengers.png?alt=media&token=78a12cd2-eabf-4294-8924-8d3766485637");
+
+height: 150px;
+background-size: cover;
+background-repeat: no-repeat;
+
+
+}
+
+.footerstyle{
+    
+    background: rgb(59, 58, 58);
+    border-radius: 20px 20px 0px 0px;
+    
+    
+    }
