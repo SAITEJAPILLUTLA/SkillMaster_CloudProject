@@ -16,6 +16,7 @@ require('firebase/auth');
 require('firebase/database');
 require('firebase/storage');
 
+const storage = firebase.storage();
 class Creator extends Component{
 
 
@@ -45,7 +46,7 @@ class Creator extends Component{
 
       handleUpload = () => {
         const { image } = this.state;
-        const uploadTask = firebase.storage().ref(`images/${image.name}`).put(image);
+        const uploadTask = storage.ref(`/images/${image.name}`).put(image);
         uploadTask.on(
           "state_changed",
           snapshot => {
@@ -61,7 +62,7 @@ class Creator extends Component{
           },
           () => {
             // complete function ...
-            firebase.storage()
+            storage
               .ref("images")
               .child(image.name)
               .getDownloadURL()

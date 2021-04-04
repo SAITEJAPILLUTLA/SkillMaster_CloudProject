@@ -11,13 +11,14 @@ const config ={
   authDomain:"skillmaster-39e85.firebaseapp.com",
   databaseURL:process.env.REACT_APP_FIREBASE_DATABASEURL,
   projectId: "skillmaster-39e85",
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGEBUCKET,
+  storageBucket:"skillmaster-39e85.appspot.com" ,
   messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGINGSENDERID,
   appId: process.env.REACT_APP_FIREBASE_APPID,
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENTID
 
 }
 
+console.log(process.env.REACT_APP_FIREBASE_STORAGEBUCKET)
 console.log( process.env.REACT_APP_FIREBASE_PROJECTID)
 console.log(process.env.REACT_APP_FIREBASE_API_KEY)
 firebase.initializeApp(config);
