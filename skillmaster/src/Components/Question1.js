@@ -184,8 +184,6 @@ loadques=()=>{
         coi=parseInt(ques.val())
     }).then((error)=>{
         if(coi>10){
-
-        
         coi=coi-10;
         this.setState({coins : coi})
         const setUp=firebase.database().ref('scavanger/RegisteredTeam/'+this.state.key+'/')

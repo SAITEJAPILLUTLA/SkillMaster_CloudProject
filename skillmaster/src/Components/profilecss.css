@@ -1,0 +1,29 @@
+.boxs{
+    height:70px ;
+    width: 150px;
+    background-color: rgba(140, 22, 115, 0.2);
+    
+    border-radius: 5px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    border: 0ch;
+}
+.boxm{
+
+    height:170px ;
+    width: 250px;
+    background-color: rgba(140, 22, 115, 0.2);
+    
+    border-radius: 5px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    border: 0ch;
+}
+.boxl{
+
+    height:170px ;
+    width: 450px;
+    background-color: rgba(140, 22, 115, 0.2);
+    
+    border-radius: 5px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    border: 0ch;
+}
