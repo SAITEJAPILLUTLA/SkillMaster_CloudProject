@@ -8,8 +8,8 @@ import '../Components/home.css'
 import signInWithGoogle  from "../providers/UserProvider";
 import firebase from "firebase/app";
 import Footer from "../Components/footer"
-
-import auth from "../firebase.js"
+import Creator from "../Components/creator"
+import { auth } from "../firebase"
 
 import { UserContext } from "../providers/UserProvider";
 import Features from "../Components/features"
@@ -24,6 +24,7 @@ const provider = new firebase.auth.GoogleAuthProvider();
   
     
   const user = useContext(UserContext);
+
   
 console.log(user)
   if(user!=null){
@@ -53,6 +54,7 @@ console.log(user)
               Helllo {user.displayName}, 
             </div>
             <Features/>
+            <Creator/>
         
           </section>
           

@@ -10,12 +10,20 @@ import auth from "../firebase.js"
 import "../Components/home.css"
 import { UserContext } from "../providers/UserProvider";
 function LoginCSI() {
-
 const provider = new firebase.auth.GoogleAuthProvider();
 const auth = firebase.auth();
  const firestore = firebase.firestore();
     const InWithGoogle = () => {
-        auth.signInWithPopup(provider);
+        auth.signInWithPopup(provider).then(()=>{
+          auth.onAuthStateChanged(userAuth => {
+            firebase.database().ref('/users/'+userAuth.uid+'/').update({
+                name : userAuth.displayName,
+                email : userAuth.email,
+                profileImageURL :userAuth.photoURL,
+                lastLogin :Date.now()
+            })
+          })
+        });
         
       };
 

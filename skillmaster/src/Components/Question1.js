@@ -2,6 +2,8 @@ import React,{Component} from 'react'
 import { useContext } from 'react';
 import { Redirect } from 'react-router-dom'
 import { Link } from 'react-router-dom'
+import { CircularProgressbar } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 import Footer from "../Components/footer"
 import  { useState, useEffect } from 'react';
 import '../Components/question.css'
@@ -11,7 +13,10 @@ import { auth } from "../firebase"
 require('firebase/auth');
 require('firebase/database');
 
-class Questionone extends Component{
+
+
+const percentage = 66;
+class Details extends Component{
 
 
 
@@ -20,6 +25,17 @@ class Questionone extends Component{
     constructor(props){
         super(props);
         this.state={
+
+
+            publicquizlist:[],
+
+
+
+
+
+
+
+
             question:'',
             imgUrl:'',
             hint1:'',
@@ -110,8 +126,6 @@ loadques=()=>{
             const sett=firebase.database().ref('scavanger/RegisteredTeam/'+snapshot.key+'/')
             sett.once("value").then((setno)=>{
                 if(setno.val().set!=null){
-
-                    
                 let set=setno.val().set
                 this.setState({ set: set });
                 let coins=setno.val().coins
@@ -236,9 +250,22 @@ handleSubjectChange=(event)=>{
 
 
 
+componentDidMount(){
+    auth.onAuthStateChanged(auth =>{
+        this.setState({auth :auth.displayName})
+        
+        const quizref =firebase.database().ref('/quizes/'+this.props.match.params.id+'/')
+        quizref.on("value",snapshot=>{
+            let publicquizlist = [];
+                        publicquizlist.push(snapshot.val());
+                        this.setState({ publicquizlist: publicquizlist });
+                        this.setState({questionDetails:true})
+        //})
 
+    })
+})
 
-
+}
 
 
 
@@ -247,13 +274,88 @@ handleSubjectChange=(event)=>{
     render(){
 
 
-        if(this.state.user!=null){
-            if(this.state.applied){
-            if(this.state.key!="0"){
-            if(this.state.question!=null){
+            if(this.state.auth!=''){
                      return(
             <>
+
+                <section className="row m-5 pt-5 justify-content-center">
+                   <div className=" ">
+
+
+                                
+
+
+                            {this.state.questionDetails?<section>
+                   {this.state.publicquizlist.map(obj =>{ 
+
+
+                             return(
+
+                                <>
+                                
+                               <div><h1>{obj.quizName}</h1></div> 
+                            <div>{obj.by}</div>
+                            
+                            <div>{obj.attempted}</div>
+                                 <div style={{ width: 200, height: 200 }}>
+                        <CircularProgressbar styles={{
+                                path: {
+                                    stroke: `rgba(238, 34, 34, 0.7)`,
+                                    strokeWidth:3.5,
+                                    background:true,
+                                    backgroundColor: '#161010',
+                                    strokeLinecap: 'round',
+                                    transformOrigin: 'center center',
+                                    
+                                  },
+                                  trail: {
+                                    // Trail color
+                                    stroke: '#ffffff',
+                                    strokeWidth:3.5,
+                                  },
+    }} value={obj.numberofquestions} maxValue={20} text={`${obj.numberofquestions}`} />
+                        </div>
+                        <div style={{ width: 200, height: 200 }}>
+                        <CircularProgressbar styles={{
+                                path: {
+                                    stroke: `rgba(238, 34, 34, 0.7)`,
+                                    strokeWidth:3.5,
+                                    background:true,
+                                    backgroundColor: '#161010',
+                                    strokeLinecap: 'round',
+                                    transformOrigin: 'center center',
+                                    
+                                  },
+                                  trail: {
+                                    // Trail color
+                                    stroke: '#ffffff',
+                                    strokeWidth:3.5,
+                                  },
+    }} value={obj.attempted} maxValue={20} text={`${obj.attempted}`} />
+                        </div>
+
+
+
+
+                            
+                                </>
+                             )})}    </section>:null}
+
+
+
+<Link to={`/Instructions/${this.props.match.params.id}`} className=" btn effect01 " ><span>Participate in {this.props.match.params.id}</span></Link> 
+                   
+                   </div>
+                       
+                   </section>
+
+
+
+
+
+
                 <section className="row m-5 pt-5">
+
                    <div className="row col-sm-11">
                 <div className ="row justify-content-center">
                     <div><h1 className="whitefont italic glass p-2 px-5">Your First Riddle {this.state.displayName}</h1></div>
@@ -323,41 +425,9 @@ handleSubjectChange=(event)=>{
                 }
 
        
-    
-    
-    
-    }
-        else{
-            return(<>
-                <div className="mt-5 pt-5 row justify-content-center">
-                   <h1 className="whitefont italic ">Creating Set and Loading your Questions</h1></div>
-             <div className="mt-5 pt-5 row justify-content-center">
-                <h5 className="whitefont italic ">{this.state.log}</h5></div>
-                
-                  <div class="wrapper">
+}
 
-               
-	
-</div>
+}
 
 
-
-<Footer/>
-            
-            
-            
-            </>)
-        }
-            }else { return <Redirect to="/LoginCSI" />}
-
-
-
-    }
-    else{
-    
-      return <Redirect to="/LoginCSI" />
-    }
-}}
-
-
-export default Questionone
+export default Details

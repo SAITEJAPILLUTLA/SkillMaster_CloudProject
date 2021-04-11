@@ -1,11 +1,11 @@
-import React from 'react'
+import React,{Component} from 'react'
 import { useContext } from 'react';
 import { Redirect } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import '../Components/home.css'
 import signInWithGoogle  from "../providers/UserProvider";
 import firebase from "firebase/app";
-import auth from "../firebase.js"
+import { auth } from "../firebase"
 import { UserContext } from "../providers/UserProvider";
 import './instructions.css'
 
@@ -13,20 +13,43 @@ import IntervalExample from "../Components/timer"
 
 
 import Footer from "../Components/footer"
+import { render } from '@testing-library/react';
 
 
-
-function Instructions() {
 
 const provider = new firebase.auth.GoogleAuthProvider();
-  const user = useContext(UserContext);
-  console.log(user)
+  //const user = useContext(UserContext);
+class Instructions extends Component{
+
+    constructor(props){
+        super(props);
+        this.state={
+
+            username:'',
+            rendernow:false,
+        }}
+        componentDidMount(){
+
+            let username =""
+
+                auth.onAuthStateChanged(user =>{
+                  username=  user.displayName 
+                  this.setState({rendernow :true})
+
+        this.setState({ username: username });
+        console.log(username)
+
+                })
+        }
   
       
+render(){
 
-      
-  if(user!=null){
-      console.log(user.displayName)
+
+    
+      if(this.state.rendernow){
+  if(this.state.name!=''){
+      console.log(this.state.name)
     return (
         <>
 
@@ -72,8 +95,7 @@ const provider = new firebase.auth.GoogleAuthProvider();
             
                 <h6 style={{color:'whitesmoke'}}>By Clicking button below you are agreeing to our above rules.</h6>
             <div className="my-5 py-5 row justify-content-center">
-            <Link to={`/Questionone/${user.email}`} className="btn effect01" ><span>Let's see your First Riddle {user.email}</span>
-                </Link>    
+                
         </div>
         
           </section>
@@ -84,6 +106,12 @@ const provider = new firebase.auth.GoogleAuthProvider();
 }
 else{
 
-  return <Redirect to="/LoginCSI" />}}
+  return <Redirect to="/LoginCSI" />}
+}else{return(<>
+<h1>Instruction</h1>
+</>)}
+}
+}
+
 
 export default Instructions

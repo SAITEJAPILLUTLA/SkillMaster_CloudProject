@@ -42,15 +42,16 @@ function Navbar() {
                 to='/home' onClick={changePage01}>
                   Home</Link>
             </li>
-            <li>
+            {/* <li>
               <Link className={menu2 ?"active active-first":""} data-toggle="collapse" data-target="#mainMenu" aria-controls="mainMenu" aria-expanded="false" aria-label="Toggle navigation"
                 to='/services' onClick={changePage02}>
                   Services</Link>
-            </li>
+            </li> */}
             <li>
               <Link data-toggle="collapse" data-target="#mainMenu" aria-controls="mainMenu" aria-expanded="false" aria-label="Toggle navigation"
-               to='/contact' >
-                 <div id="goldenhour" className=" px-3 py-1">Let's have a golden hour </div></Link>
+               to='/ProfilePage' >
+                 <div id="goldenhour" className=" px-3 py-1"> View My Profile </div></Link>
+                 
             </li>
           </ul>
         </div>
