@@ -229,6 +229,7 @@ border-radius: 5px;
   border: 2px solid #5E6EFF;
 box-sizing: border-box;
 border-radius: 9px;
+color: rgb(255, 255, 255);
 -webkit-transition: all 0.5s ease;
 }
 #goldenhour:hover{

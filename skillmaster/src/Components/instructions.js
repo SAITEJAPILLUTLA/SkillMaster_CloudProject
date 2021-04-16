@@ -3,6 +3,9 @@ import { useContext } from 'react';
 import { Redirect } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import '../Components/home.css'
+import '../Components/question.css'
+import '../Components/creatorcss.css'
+import '../Components/profilecss.css'
 import signInWithGoogle  from "../providers/UserProvider";
 import firebase from "firebase/app";
 import { auth } from "../firebase"
@@ -38,6 +41,22 @@ class Instructions extends Component{
 
         this.setState({ username: username });
         console.log(username)
+        let views=0
+        let by =""
+        let quizref =firebase.database().ref('quizes/'+this.props.match.params.id+'/')
+        quizref.once("value").then(function (snap) {
+            
+            by =snap.val().by
+            views=snap.val().views +1
+            console.log(views)
+            console.log(by)
+        }).then((e)=>{
+            quizref.update({
+                views:views
+            }).then(()=>{
+                this.setState({by : by} )
+                this.setState({views : views} )})
+        })
 
                 })
         }
@@ -57,20 +76,21 @@ render(){
                 <div className="row justify-content-center">
                     <div className="whiteFont italic">
                         
-                    <h1>INSTRUCTIONS FOR SCAVENGERS</h1>
+                    <h1>INSTRUCTIONS FOR {this.props.match.params.id}</h1>
                     </div>
                 </div>
 
                 <div className="glass p-4 my-4">
                     <h3>Pattern of Exam</h3>
                     <div className="px-5">
+                        <li>by {this.state.by} and views is {this.state.views} </li>
                     <li>Based on the Points and the answer The winner will be decided</li>
                     <li>Every question is a riddle. Solving each riddle leads to next question.</li></div>
                 </div>
                 <div className="glass p-4 my-4">
                     <h3>Procedure of Exam</h3>
                     <div className="px-5">
-                    <li>There are different question sets with different riddles included</li>
+                    <li>Thered</li>
                     <li>Hints will be provided to students upon request. But each hint leads to a reduction of points.</li>
                     <li>After solving the 1st question only you can able to solve the 2nd question.After solving 2nd question you can able to crack the final riddle</li>
                     <li>Every Hint costs 10 points from total given points.</li>
@@ -94,11 +114,16 @@ render(){
        
             
                 <h6 style={{color:'whitesmoke'}}>By Clicking button below you are agreeing to our above rules.</h6>
-            <div className="my-5 py-5 row justify-content-center">
-                
-        </div>
+           
         
           </section>
+
+<div className="row justify-content-center">
+
+    
+          <Link to={`/Question/${this.props.match.params.id}`} className=" btn effect01 " ><span>Participate in {this.props.match.params.id}</span></Link> 
+
+</div>
           
           <Footer/>
         </>

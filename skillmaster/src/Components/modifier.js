@@ -38,7 +38,9 @@ class Modifier extends Component{
             createTask:false,
             selectVal:"1",
             answer:'',
-            loading:true
+            loading:true,
+            showobj:false,
+            choosefile:'Choose File '
         }
         }
 
@@ -59,6 +61,7 @@ class Modifier extends Component{
                     // console.log(snapshot)
                         publicquizlist.push(snap.val());
                     });
+                    this.setState({showobj:true})
                     this.setState({ publicquizlist: publicquizlist });
                   });
         })}
@@ -77,6 +80,9 @@ class Modifier extends Component{
                     });
                     this.setState({questionslist :questionslist})
             })
+            
+            this.setState({createTask :false})
+            this.setState({showfullquestion :false})
             this.setState({showquestion :true})
         }
         handleQuestionChoose=(q)=>{
@@ -95,35 +101,28 @@ class Modifier extends Component{
             this.setState({answerTwo :false})
             this.setState({answerThree :false})
             this.setState({answerFour :false})
-
             }else if(q.answer=='2'){
-                
-            this.setState({answerOne :false})
+                            this.setState({answerOne :false})
             this.setState({answerThree :false})
             this.setState({answerFour :false})
               this.setState({answerTwo :true})
               }else if(q.answer=='3'){
-                
-            this.setState({answerOne :false})
+                            this.setState({answerOne :false})
             this.setState({answerTwo :false})
             this.setState({answerFour :false})
                 this.setState({answerThree :true})
                 }else if(q.answer=='4'){
-                
-            this.setState({answerOne :false})
+                          this.setState({answerOne :false})
             this.setState({answerTwo :false})
             this.setState({answerThree :false})
                   this.setState({answerFour :true})
                   }
-
-
                 this.setState({showfullquestion :true})
                 this.setState({ saveChanges :true})
 
 
         }
-        
-        handlecquestionchange=(event)=>{
+                handlecquestionchange=(event)=>{
 
             this.setState({cquestion :event.target.value})
         }
@@ -145,6 +144,7 @@ class Modifier extends Component{
             if (e.target.files[0]) {
               const image = e.target.files[0];
               this.setState(() => ({ image }));
+              this.setState({ choosefile :image.name})
             }
           };
   handleQuestionImageUpload = (event) => {
@@ -152,6 +152,7 @@ class Modifier extends Component{
     this.setState({ status: "preparing image to upload Image !" });
     this.setState({ progress: 30 });
     const { image } = this.state;
+    
     const uploadTask = storage.ref(`/images/${timeStamp}`).put(image);
     uploadTask.on(
       "state_changed",
@@ -242,8 +243,6 @@ class Modifier extends Component{
 
 })
 }
-
-
   handleAddTask(){
 this.setState({createTask :true})
 console.log("add task")
@@ -283,7 +282,6 @@ console.log("add task")
     });
 
   }
-
   handletaskQuestionImageUpload = (event) => {
     if((this.state.cquizName!='')||(this.state.taskquestion!='')||(this.state.taskoptionOne!='')){
     
@@ -320,8 +318,7 @@ console.log("add task")
   }else{
     
     this.setState({ status: "One of the Feilds is empty !" });
-  }};
-      
+  }}; 
   handlecreateTask(){
     
     this.setState({ status: "Preparing Question to Upload !" });
@@ -364,7 +361,8 @@ console.log("add task")
           timeStamp: timeStamp,
           quizName :quiz,
           uid :userAuth.uid,
-          numberofquestions :number
+          numberofquestions :number,
+          views :0,
         }).then(()=>{
           quizesuserref.update({
           timeStamp: timeStamp,
@@ -395,8 +393,7 @@ console.log("add task")
     this.setState({ uploaded:true})
 
 
-    let question = ""
-    question = this.state.
+    
     this.setState({taskquestion:""})
     let url = ""
     url = this.state.url
@@ -412,13 +409,11 @@ console.log("add task")
       })
     })
   }
-
   handleSelect(event){
     this.setState({selectVal:event.target.value});
     console.log(this.state.selectVal)
     
   }
-
   handleanswerOne(){
     let answer ="1"
     this.setState({selectVal :answer})
@@ -448,131 +443,192 @@ console.log("add task")
     this.setState({answerThree :false})
     this.setState({answerOne :false})
   }
-
-
-
-
         render(){
             return(
                 <>
-                <div >
-                <img src="spinner.gif"/>
-                <section className=" mx-4 mt-5 pt-5 ">
-                    <h1>hellos</h1>
-                    <div className="row justify-content-center">
-                         {this.state.publicquizlist.map(data =>{ 
-                             return(
-                                    <div className="boxm" onClick={()=>{  this.handleQuizChoose(data.quizName)}}><h4>{data.quizName}</h4></div>
-                             )
+                
+                {this.state.showobj?<div className="mt-5 pt-5" >
+                <div className="mx-5   row justify-content-center">
+                  <div className="mx-5 px-5 wf graph">
 
-                         })}
-                    <div className="boxm" onClick={()=>{ this.handleAddTask() }} ><strong>ADD TASK</strong></div>
-                    </div>
-                    {this.state.createTask ?
-                    
-                    
-                    <section>
-            <div>EnterAssignmentName [Case Sensitive] ::</div>
-            <input value={this.state.cquizName} onChange={this.handleQuizChange} />
-
-            
-            <div>EnterQuestion ::</div>
-            <textarea value={this.state.taskquestion} onChange={this.handleQuestionChange} />
-                    
-
-                    <div>Option 1 ::</div>
-            <textarea value={this.state.taskoptionOne} onChange={this.handleoptionOneChange} />
-
-
-            <div>Option 2 ::</div>
-            <textarea value={this.state.taskoptionTwo} onChange={this.handleoptionTwoChange} />
-            <div>Option 3 ::</div>
-            <textarea value={this.state.taskoptionThree} onChange={this.handleoptionThreeChange} />
-            <div>Option 4 ::</div>
-            <textarea value={this.state.taskoptionFour} onChange={this.handleoptionFourChange} />
-            <div>
-              <input type="file" accept="image/*" onChange={this.handleQuestionImageChange} /> 
-              </div>
-              
-              <img src={this.state.url} alt="Uploaded Images" />
-              <div className="row">
-                  <progress value={this.state.progress} max="100" className="progress my-4" />
-                  <span>{this.state.status}</span>
+                  <h1 className="px-5">Tasks By You</h1>
+                  </div>
                 </div>
-                <div>
-                  
-            <div>Answer ::</div>
-            <input type="checkbox" checked={this.state.answerOne}  onChange={()=>{this.handleanswerOne()}} />
-            <label>Option 1</label>
-            <input type="checkbox" checked={this.state.answerTwo} onChange={()=>{this.handleanswerTwo()}} />
-            <label>Option 2</label>
-            <input type="checkbox" checked={this.state.answerThree} onChange={()=>{this.handleanswerThree()}} />
-            <label>Option 3</label>
-            <input type="checkbox" checked={this.state.answerFour} onChange={()=>{this.handleanswerFour()}} />
-            <label>Option 4</label>
-                </div>
-                <div class="btn effect01 " onClick={()=>{ this.handletaskQuestionImageUpload() }}>Create Task and add Another Question</div>
-                </section>:null}
-                   
-                    {this.state.showquestion ?
-                    <div className="row justify-content-center" >
+<section className=" mx-4 mt-5 pt-5 ">
 
-                         {this.state.questionslist.map((data) =>{    
-                                return(<div>
-                                    <div className="boxm" onClick={()=>{ this.handleQuestionChoose(data) }}><h4>{data.question}</h4></div>
-                                    </div>) 
-                         })}
-                         <div className="boxm" onClick={()=>{ this.handleAdd() }}><h4>ADD</h4></div>
-                                    
-                    </div> :null}
-                    {this.state.showfullquestion?<section>
-                            <span>Question ::</span>
-                            <textarea value={this.state.cquestion} onChange={this.handlecquestionchange}></textarea>
-<span>optionOne ::</span>
-<textarea value={this.state.optionOne} onChange={this.handlecquestionOptionOnechange}></textarea>
+                <div class="mx-4 px-5 py-3 graph">
+    <div className="row justify-content-center">
+         {this.state.publicquizlist.map(data =>{ 
+             return(
+                    <div className="mx-2 p-5 boxm" onClick={()=>{  this.handleQuizChoose(data.quizName)}}><h4>{data.quizName}</h4></div>
+             )
 
-<span>optionTwo ::</span>
-<textarea value={this.state.optionTwo} onChange={this.handlecquestionOptionTwochange}></textarea>
+         })}
+    <div className="p-5 boxm" onClick={()=>{ this.handleAddTask() }} >
+ <strong>
+    <img style={{height:25,}} src="plus.png"/>
 
-<span>optionThree ::</span>
-<textarea value={this.state.optionThree} onChange={this.handlecquestionOptionThreechange}></textarea>
+      </strong></div>
+    </div>
 
-<span>optionFour ::</span>
-<textarea value={this.state.optionFour} onChange={this.handlecquestionOptionFourchange}></textarea>
-
-<span>Image</span>
-<img src={this.state.url} alt="Uploaded Images" />
-<span>{this.state.url}</span>
-
-<span>Choose Replace Image ::</span>
-<input type="file" accept="image/*" onChange={this.handleQuestionImageChange} />
+    </div>
+    {this.state.createTask ?
+    
+    
+    <section className="mt-3 py-4 px-5 graph">
+<div  className=" pt-3 font-weight-bold" >EnterAssignmentName [Case Sensitive] ::</div>
+<input className="myinput " style={{maxWidth:500,}} value={this.state.cquizName} onChange={this.handleQuizChange} />
 
 
+<div className=" pt-3 font-weight-bold">EnterQuestion ::</div>
+<textarea className="myinput " style={{height:100,}} value={this.state.taskquestion} onChange={this.handleQuestionChange} />
+    
+
+    <div className=" pt-3 font-weight-bold">Option 1 ::</div>
+<textarea  className="myinput "  value={this.state.taskoptionOne} onChange={this.handleoptionOneChange} />
+
+
+<div className=" pt-3 font-weight-bold">Option 2 ::</div>
+<textarea className="myinput "  value={this.state.taskoptionTwo} onChange={this.handleoptionTwoChange} />
+<div className=" pt-3 font-weight-bold">Option 3 ::</div>
+<textarea className="myinput "  value={this.state.taskoptionThree} onChange={this.handleoptionThreeChange} />
+<div className=" pt-3 font-weight-bold">Option 4 ::</div>
+<textarea className="myinput "  value={this.state.taskoptionFour} onChange={this.handleoptionFourChange} />
+<div className=" pt-3 font-weight-bold">If there is image Attach it else leave it :</div>
+<div class="custom-file mt-3" style={{maxWidth:300,}}>
+    <input type="file" accept="image/*" onChange={this.handleQuestionImageChange} class="custom-file-input" id="customFile"/>
+    <label class="custom-file-label" for="customFile">{this.state.choosefile}</label>
+  </div>
+
+<img src={this.state.url} alt="  " />
+
+<div class="ml-5 mt-5">
+  
+<div>Answers ::</div>
 <div>
-                  
-            <div>Answer :: {this.state.answer}</div>
-            <input type="checkbox" checked={this.state.answerOne}  onChange={()=>{this.handleanswerOne()}} />
-            <label>Option 1</label>
-            <input type="checkbox" checked={this.state.answerTwo} onChange={()=>{this.handleanswerTwo()}} />
-            <label>Option 2</label>
-            <input type="checkbox" checked={this.state.answerThree} onChange={()=>{this.handleanswerThree()}} />
-            <label>Option 3</label>
-            <input type="checkbox" checked={this.state.answerFour} onChange={()=>{this.handleanswerFour()}} />
-            <label>Option 4</label>
-                </div>
-<progress value={this.state.progress} max="100" className="progress my-4" />
+<input type="checkbox" class="form-check-input" checked={this.state.answerOne}  onChange={()=>{this.handleanswerOne()}} />
+<label>Option 1</label>
+</div>
+<div>
+<input type="checkbox" class="form-check-input"  checked={this.state.answerTwo} onChange={()=>{this.handleanswerTwo()}} />
+<label>Option 2</label></div><div>
+<input type="checkbox" class="form-check-input"  checked={this.state.answerThree} onChange={()=>{this.handleanswerThree()}} />
+<label>Option 3</label></div><div>
+<input type="checkbox" class="form-check-input"  checked={this.state.answerFour} onChange={()=>{this.handleanswerFour()}} />
+<label>Option 4</label></div>
+</div>
+<div className="row " >
+  <progress value={this.state.progress} max="100" className="progress my-4" />
+  <span>{this.state.status}</span>
+</div>
+<div class="btn effect01 " onClick={()=>{ this.handletaskQuestionImageUpload() }}>Create Task and add Another Question</div>
+</section>:null}
+<div className="my-3 mx-5 py-3 graph row justify-content-center" >
+   
+    {this.state.showquestion ?
+   
+    <div className="row justify-content-center" >
+          
+         {this.state.questionslist.map((data) =>{    
+                return(<div>
+                    <div className=  "mx-3 p-5 boxm" onClick={()=>{ this.handleQuestionChoose(data) }}><h4>{data.question}</h4></div>
+                    </div>) 
+         })}
+         <div className="p-5 boxm" onClick={()=>{ this.handleAdd() }}><strong>
+    <img style={{height:25,}} src="plus.png"/>
+
+      </strong></div>
+                    
+    </div> :null}
+    </div>
+
+
+    {this.state.showfullquestion?<section 
+    className="graph">
+      <div  class="px-5 p-2">
+            <span className=" pt-3 font-weight-bold">  Question ::</span><div>
+            <textarea  className="myinput " style={{height:100,}} value={this.state.cquestion} onChange={this.handlecquestionchange}></textarea></div><div class="px-5 p-3">
+            </div>
+<span className=" pt-3 font-weight-bold">optionOne ::</span><div>
+<textarea className="myinput "  value={this.state.optionOne} onChange={this.handlecquestionOptionOnechange}></textarea></div><div class="px-5 p-3">
+</div>
+<span className=" pt-3 font-weight-bold">optionTwo ::</span>
+<div>
+<textarea className="myinput "  value={this.state.optionTwo} onChange={this.handlecquestionOptionTwochange}></textarea></div><div class="px-5 p-3">
+</div>
+
+<span className=" pt-3 font-weight-bold">optionThree ::</span><div>
+<textarea className="myinput "  value={this.state.optionThree} onChange={this.handlecquestionOptionThreechange}></textarea></div><div class="px-5 p-3">
+</div>
+
+<span className=" pt-3 font-weight-bold">optionFour ::</span><div>
+<textarea className="myinput "  value={this.state.optionFour} onChange={this.handlecquestionOptionFourchange}></textarea></div>
+
+<span className=" pt-3 font-weight-bold">Image</span>
+<div>
+<img src={this.state.url} alt="Uploaded Images" /></div>
+<div  className=" pt-4">
+<span className=" pt-5 font-weight-bold">Choose Replace Image ::</span></div>
+<div class="custom-file mt-3" style={{maxWidth:300,}}>
+    <input type="file" accept="image/*" onChange={this.handleQuestionImageChange} class="custom-file-input" />
+    <label class="custom-file-label" for="customFile">{this.state.choosefile}</label>
+  </div>
+<div>
+</div>
+
+
+
+
+
+
+
+<div >
+
+<div className=" pt-3 font-weight-bold">Answer :: {this.state.answer}</div>
+<input type="checkbox" checked={this.state.answerOne}  onChange={()=>{this.handleanswerOne()}} />
+<label>Option 1</label>
+</div>
+<div>
+<input type="checkbox" checked={this.state.answerTwo} onChange={()=>{this.handleanswerTwo()}}/>
+<label>Option 2</label>
+</div>
+<div>
+<input type="checkbox" checked={this.state.answerThree} onChange={()=>{this.handleanswerThree()}} />
+<label>Option 3</label>
+</div>
+<div>
+<input type="checkbox" checked={this.state.answerFour} onChange={()=>{this.handleanswerFour()}} />
+<label>Option 4</label>
+</div>
+
+<progress class="" value={this.state.progress} max="100" className="progress my-4" />
 <span>{this.state.status}</span>
 
+
+<div class="row justify-content-center" >
 {this.state.saveChanges?
 <button onClick={()=>{this.handleQuestionImageUpload()}} class="btn effect01 ">Save Changes to Question</button>
 :
-<button onClick={()=>{this.handleQuestionImageUpload()}} class="btn effect01 ">Add Question</button>
-        }
+<button onClick={()=>{this.handleQuestionImageUpload()}} class="btn effect01 ">Add Question
+</button>
+}</div>
+</div>
 
-                    </section>:null}
-                </section>
-                </div>
 
+    </section>:null}
+
+
+
+
+
+</section>
+</div>
+   :<div className="mt-5 pt-5 row justify-content-center"> 
+                <img className="h-500" style={{height:200,}} src="spinner.gif"/></div>}
+                
+
+
+                  
                 {this.state.uploaded ? <section class="details-modal"  >
           <div class="details-modal-title">
             <h1>Question Updated Sucessfully !!</h1>
@@ -584,6 +640,8 @@ console.log("add task")
           </div>
           <button class="btn effect01 " onClick={this.handlepopup}>Okay</button>
         </section> : null}
+
+        <Footer/>
                 </>
             )
         }

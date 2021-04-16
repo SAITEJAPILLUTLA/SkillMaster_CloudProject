@@ -155,7 +155,8 @@ class Creator extends Component {
             by: userAuth.displayName,
             contactMail: userAuth.email,
             timeStamp: timeStamp,
-            quizName :quiz
+            quizName :quiz,
+            views :0,
           })
         }).then(e => {
 
@@ -167,7 +168,8 @@ class Creator extends Component {
           optionTwo: optionTwo,
           optionThree: optionThree,
           optionFour: optionFour,
-          questionnumber:questionnumber
+          questionnumber:questionnumber,
+          
         })
           
     this.setState({ status: "Attaching Nodes to Question !" });
@@ -274,97 +276,47 @@ class Creator extends Component {
   render() {
     return (
       <>
-        <section className=" mx-4 mt-5 pt-5 ">
+        <section className=" mx-5 mt-5 pt-3 ">
 
 
 
 
-
+        <div className="barbox mt-5 p-4">
+          
 
 
 
           <h1>Quizes Active Now ::</h1>
-          {
-            this.state.showQuizes?
+            <div className="px-5"  >
+          {this.state.showQuizes?
           <section className="row">
           {this.state.publicquizlist.map(data =>{ 
                              return(
-                                    <Link to={`/Details/${data.quizName}`}>
-                                    <div className="boxm">
+
+                                    <Link className="boxm m-3 p-3" to={`/Details/${data.quizName}`}>
+                                    <div >
                                       <h4>{data.quizName}</h4>
                                       <h5>{data.by}</h5>
+                                      <h5>{data.by}</h5>
                                       </div></Link>
+                                      
                              )
 
                          })}</section>:null}
 
+</div>
+
+              
 
 
 
-          <form className="whitefont" onSubmit={this.handleQuestionImageUpload}>
+</div>
+  </section>
 
 
-            <div>EnterAssignmentName [Case Sensitive] ::</div>
-            <input value={this.state.quiz} onChange={this.handleQuizChange} />
-
-            <div>EnterQuestion ::</div>
-            <textarea value={this.state.question} onChange={this.handleQuestionChange} />
-
-            <div>Option 1 ::</div>
-            <textarea value={this.state.optionOne} onChange={this.handleoptionOneChange} />
 
 
-            <div>Option 2 ::</div>
-            <textarea value={this.state.optionTwo} onChange={this.handleoptionTwoChange} />
-
-
-            <div>Option 3 ::</div>
-            <textarea value={this.state.optionThree} onChange={this.handleoptionThreeChange} />
-
-
-            <div>Option 4 ::</div>
-            <textarea value={this.state.optionFour} onChange={this.handleoptionFourChange} />
-
-
-            <section>
-
-              <div className="">
-
-                <div className="file-field input-field">
-                  <div className="btn">
-                    <span>File</span>
-                    <input type="file" onChange={this.handleQuestionImageChange} />
-                  </div>
-                </div>
-                <div className="row">
-                  <progress value={this.state.progress} max="100" className="progress my-4" />
-                  <span>{this.state.status}</span>
-                </div>
-                {/* <button
-                  onClick={this.handleQuestionImageUpload} className="btn effect01">
-                  Upload
-                  </button> */}
-                <img src={this.state.url} alt="Uploaded Images" />
-              </div>
-            </section>
-
-            <input type="checkbox" defaultChecked={this.state.public} onChange={this.handlePublicAssignment} />
-            <label>Make this as Public</label>
-            <button type="submit" class="btn effect01 ">Save Question</button>
-            <Link to={this.state.uploaded}></Link>
-          </form>
-        </section>
-        {this.state.uploaded ? <section class="details-modal"  >
-          <div class="details-modal-title">
-            <h1>Question Updated Sucessfully !!</h1>
-          </div>
-          <div class="details-modal-content">
-            <p>
-              Your Question is Updated Sucessfully as :: question{this.state.currentQ} under Quiz :: {this.state.quiz}
-            </p>
-          </div>
-          <button class="btn effect01 " onClick={this.handlepopup}>Okay</button>
-        </section> : null}
+        
       </>
     )
   }

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import '../Components/home.css'
 import signInWithGoogle  from "../providers/UserProvider";
 
+import Footer from "../Components/footer"
 import firebase from "firebase/app";
 import auth from "../firebase.js"
 import "../Components/home.css"
@@ -60,7 +61,7 @@ else{
        
        
        
-       
+       <Footer/>
         </>
     )}
 }

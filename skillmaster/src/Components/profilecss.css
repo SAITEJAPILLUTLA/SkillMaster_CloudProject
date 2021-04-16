@@ -1,22 +1,40 @@
 .boxs{
-    height:70px ;
-    width: 150px;
     background-color: rgba(140, 22, 115, 0.2);
     
     border-radius: 5px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
     border: 0ch;
+    backdrop-filter: blur(4px);
+    text-decoration: none;
 }
-.boxm{
 
-    height:170px ;
-    width: 250px;
-    background-color: rgba(140, 22, 115, 0.2);
+.boxm{
     
-    border-radius: 5px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-    border: 0ch;
+border-bottom: 0.2px solid rgba(226, 226, 226, 0.2);
+border-right: 0.21px solid rgba(226, 226, 226, 0.2);
+    background: linear-gradient(103.37deg, #ffffff9c 0%, rgba(196, 196, 196, 0.430903) 39.76%, rgba(196, 196, 196, 0) 99.87%);
+border-radius: 13px;
+backdrop-filter: blur(8px);
+text-decoration: none;
+-webkit-transition: all 0.5s ease;
 }
+.boxm :hover{
+    
+text-decoration: none;
+-webkit-transform: translate(1px, 2px) scale(1.01);
+}
+.graph{
+    background: linear-gradient(103.37deg, #ffffff9c 0%, rgba(196, 196, 196, 0.430903) 39.76%, rgba(196, 196, 196, 0) 99.87%);
+border-radius: 13px;
+backdrop-filter: blur(4px);
+text-decoration: none;
+
+}
+.Link{
+    background-color: rgb(255, 38, 38);
+text-decoration: none;
+}
+
 .boxl{
 
     height:170px ;
@@ -26,4 +44,18 @@
     border-radius: 5px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
     border: 0ch;
+}
+.barbox{
+    
+        
+    background: linear-gradient(103.37deg, #ffffff9c 0%, rgba(196, 196, 196, 0.430903) 39.76%, rgba(196, 196, 196, 0) 99.87%);
+border-radius: 13px;
+backdrop-filter: blur(7px);
+text-decoration: none;
+
+-webkit-transition: all 0.5s ease;
+
+}
+.wf{
+    color: aliceblue;
 }

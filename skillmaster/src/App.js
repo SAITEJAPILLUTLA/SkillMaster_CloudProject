@@ -7,10 +7,10 @@ import "firebase/auth";
 import "firebase/firestore";
 import Home from "../src/Components/Home";
 import Thanks from "../src/Components/thanks";
-import Details from "../src/Components/Question1";
+import Details from "../src/Components/Details";
 import Questions from "../src/Components/questions";
 import Questionss from "../src/Components/questionss";
-import Questiont from "../src/Components/Question2.js"
+import Question from "./Components/Question.js"
 import LoginCSI from "../src/Components/login";
 import Creator from "../src/Components/creator";
 import Modifier from "../src/Components/modifier"
@@ -35,9 +35,10 @@ function App() {
           
         <Route path='/' exact component={Home} />
       <Route path='/Home' exact component={Home} />
-      <Route path='/Thanks' exact component={Thanks} />
+      <Route path='/Thanks/:id' exact component={Thanks} />
       
       <Route path="/Details/:id" exact component={Details} />
+      <Route path="/Question/:id" exact component={Question} />
       <Route path="/Questions/:id" exact component={Questions} />
       <Route path="/Questionss/:id" exact component={Questionss} />
       <Route path='/Instructions/:id' exact component={Instructions} />

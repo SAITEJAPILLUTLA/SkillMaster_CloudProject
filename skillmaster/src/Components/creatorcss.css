@@ -63,7 +63,38 @@ details summary:focus {
 details summary::-webkit-details-marker {
   display: none;
 }
+.barbox{
+    
+        
+  background: linear-gradient(103.37deg, #ffffff9c 0%, rgba(196, 196, 196, 0.430903) 39.76%, rgba(196, 196, 196, 0) 99.87%);
+border-radius: 13px;
+backdrop-filter: blur(7px);
+text-decoration: none;
 
+-webkit-transition: all 0.5s ease;
+
+}
+
+
+.myinput{
+  min-height: 25px;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  display: block;
+      width: 90%;
+      height: 50px;
+      background: transparent;
+      font-size: 15px;
+      color: #fff;
+      line-height: 1.2;
+      padding: 0 5px;
+      outline: none;
+      border: 1px solid wheat;
+      overflow: auto;
+      resize: none;
+      border-radius: 5px;
+  
+  }
 
 
 
