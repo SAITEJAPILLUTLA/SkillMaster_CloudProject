@@ -29,8 +29,6 @@ class Question extends Component {
             corrects:0,
         }
     }
-
-
     componentDidMount() {
 
         let username = ""
@@ -124,7 +122,6 @@ class Question extends Component {
                                     <h1> Task {this.props.match.params.id}</h1>
                                 </div>
                             </div>
-
                            
                             <div className="glass p-4 my-4">
                                 <h3>Procedure of Exams</h3>

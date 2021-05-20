@@ -200,9 +200,6 @@ loadques=()=>{
     )
     
 }
-
-
-
     render(){
 
         return (

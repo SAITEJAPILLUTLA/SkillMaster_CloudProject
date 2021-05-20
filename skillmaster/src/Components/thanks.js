@@ -16,14 +16,12 @@ class Thanks extends Component {
             
         }
     }
-
     componentDidMount(){
         auth.onAuthStateChanged(auth=>{
             this.setState({authName : auth.displayName})
             let userref = firebase.database().ref('/users/'+auth.uid+'/attempted/'+this.props.match.params.id+'/')
             userref.once("value").then(function (snapshot) {
                     console.log(snapshot.val())
-
             })
         })
     }

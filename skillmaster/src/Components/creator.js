@@ -282,10 +282,6 @@ class Creator extends Component {
 
 
         <div className="barbox mt-5 p-4">
-          
-
-
-
           <h1>Quizes Active Now ::</h1>
             <div className="px-5"  >
           {this.state.showQuizes?
@@ -305,11 +301,6 @@ class Creator extends Component {
                          })}</section>:null}
 
 </div>
-
-              
-
-
-
 </div>
   </section>
 
